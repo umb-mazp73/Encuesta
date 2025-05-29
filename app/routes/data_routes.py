@@ -20,7 +20,8 @@ async def receive_data(
             response = await client.post(settings.FORWARD_URL, json=json_data)
         return {
             "message": "Datos de la encuesta recibidos y reenviados correctamente",
-            "forwarded_response": response.json()
+            "forwarded_response": response.json(),
+            "calculo":response
         }
     except httpx.RequestError as exc:
         return {
