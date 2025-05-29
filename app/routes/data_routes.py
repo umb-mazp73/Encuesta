@@ -24,10 +24,15 @@ async def receive_data(
                 json=json_data,
                 headers=headers
             )
+        
+        try:
+            forwarded_response = response.json()
+        except json.JSONDecodeError:
+            forwarded_response = response.text
 
         return {
             "message": "Datos de la encuesta recibidos y reenviados correctamente",
-            "forwarded_response": response.json(),
+            "forwarded_response": forwarded_response,
         }
     except httpx.RequestError as exc:
         return {
