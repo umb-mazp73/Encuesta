@@ -16,7 +16,7 @@ async def receive_data(
     print(f"Authorization header: {authorization}")
     try:
         async with httpx.AsyncClient() as client:
-            response = await client.post(settings.FORWARD_URL, json=json_data)
+            response = await client.post(settings.FORWARD_URL, json=json_data,Header={"Authorization": authorization})
         return {
             "message": "Datos de la encuesta recibidos y reenviados correctamente",
             "forwarded_response": response.json(),
