@@ -41,7 +41,7 @@ async def receive_data(data: useData, authorization: str = Header(default=None))
         async with httpx.AsyncClient() as client:
             response = await client.post(settings.FORWARD_URL, json=json_data, headers=headers)
         try:
-            forwarded_response = response.json()
+            forwarded_response = response
         except json.JSONDecodeError:
             forwarded_response = response.text
 
