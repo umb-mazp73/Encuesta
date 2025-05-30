@@ -27,13 +27,13 @@ async def receive_data(data: useData, authorization: str = Header(default=None))
 
     json_data = data.dict()
     print("Datos recibidos:\n" + json.dumps(json_data, indent=4))
-    print(f"Authorization header: {authorization}")
 
     headers = {}
     if authorization and authorization.startswith("Bearer "):
         token = authorization.split(" ")[1]
         if is_token_valid(token):
             headers["Authorization"] = authorization
+            print(f"Authorization header: {authorization}")
         else:
             print("Token inválido o expirado, no se envía cabecera Authorization")
 
