@@ -26,16 +26,16 @@ def is_token_valid(token: str) -> bool:
 async def receive_data(data: useData, authorization: str = Header(default=None)):
 
     json_data = data.dict()
-    print("✅ Datos recibidos:\n" + json.dumps(json_data, indent=4))
+    print("Datos recibidos:\n" + json.dumps(json_data, indent=4))
 
     headers = {}
     if authorization and authorization.startswith("Bearer "):
         token = authorization.split(" ")[1]
         if is_token_valid(token):
             headers["Authorization"] = authorization
-            print(f"✅ Authorization header enviada: {authorization}")
+            print(f"Authorization header enviada: {authorization}")
         else:
-            print("⚠️ Token inválido o expirado, no se envía cabecera Authorization")
+            print("Token inválido o expirado, no se envía cabecera Authorization")
 
     try:
         async with httpx.AsyncClient() as client:
@@ -46,7 +46,7 @@ async def receive_data(data: useData, authorization: str = Header(default=None))
         except json.JSONDecodeError:
             forwarded_response = {"raw_text": response.text}
 
-        print("📦 Respuesta del servidor externo:\n" + json.dumps(forwarded_response, indent=4) if isinstance(forwarded_response, dict) else str(forwarded_response))
+        print("Respuesta del servidor externo:\n" + json.dumps(forwarded_response, indent=4) if isinstance(forwarded_response, dict) else str(forwarded_response))
 
         return {
             "message": "Datos de la encuesta recibidos y reenviados correctamente",
@@ -55,7 +55,7 @@ async def receive_data(data: useData, authorization: str = Header(default=None))
         }
 
     except httpx.RequestError as exc:
-        print(f"❌ Error al reenviar los datos: {str(exc)}")
+        print(f"Error al reenviar los datos: {str(exc)}")
         return {
             "message": "Error al reenviar los datos",
             "error": str(exc)
